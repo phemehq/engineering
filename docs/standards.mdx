@@ -1,0 +1,302 @@
+---
+sidebar_position: 6
+title: Standards
+---
+
+# Standards
+
+Git workflow, naming conventions, code reviews, and development practices.
+
+## Git Workflow
+
+**Every change goes through code review. No exceptions.**
+
+### Branch Naming
+
+```
+feature/user-authentication
+bugfix/payment-timeout
+hotfix/critical-security-issue
+chore/upgrade-dependencies
+docs/deployment-runbook
+```
+
+### Commit Messages (Conventional Commits)
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
+**Scope:** The part of codebase affected (optional)
+**Subject:** Imperative mood, lowercase, no period
+
+**Examples:**
+```
+feat(auth): add OAuth2 support
+fix(api): handle null responses correctly
+docs: update deployment guide
+chore: upgrade Node to 20.0
+```
+
+### Pull Request Flow
+
+1. **Create feature branch** from `main`
+2. **Commit changes** with descriptive messages
+3. **Open PR** with title and description
+4. **Request review** from 2+ teammates
+5. **Address feedback** with new commits (don't squash until approved)
+6. **Merge** when all checks pass + approvals received
+7. **Delete branch**
+
+### Rules
+
+- All changes via pull request
+- Require 2 approvals minimum
+- Require CI/CD to pass
+- No force-pushing to main
+- Squash merge to keep history clean
+
+## Naming Conventions
+
+### Variables & Functions
+
+```python
+# Python (snake_case)
+user_email = "user@example.com"
+def calculate_total_price():
+    pass
+```
+
+```go
+// Go (camelCase)
+var userEmail = "user@example.com"
+func CalculateTotalPrice() {
+}
+```
+
+### Classes & Types
+
+```python
+# Python (PascalCase)
+class UserService:
+    pass
+
+class PaymentError(Exception):
+    pass
+```
+
+```go
+// Go (PascalCase for exported, camelCase for unexported)
+type UserService struct {
+}
+
+type PaymentError struct {
+    message string
+}
+```
+
+### Constants
+
+```python
+MAX_RETRIES = 3
+DEFAULT_TIMEOUT = 30
+API_BASE_URL = "https://api.example.com"
+```
+
+### Files & Directories
+
+```
+src/
+├── models/
+│   ├── user.py
+│   └── payment.py
+├── services/
+│   ├── auth_service.py
+│   └── payment_service.py
+├── handlers/
+│   └── api_handler.py
+└── utils/
+    └── helpers.py
+```
+
+## Code Reviews
+
+**Goal:** Improve code quality and share knowledge.
+
+### Reviewer Checklist
+
+- [ ] Code is readable and maintainable
+- [ ] No obvious bugs or logic errors
+- [ ] Follows project conventions
+- [ ] Has tests (unit + integration)
+- [ ] No performance regressions
+- [ ] No security vulnerabilities
+- [ ] Documentation is updated
+
+### Author Checklist
+
+- [ ] Tests pass locally
+- [ ] Linting passes
+- [ ] No commented-out code
+- [ ] No console.log/print statements (except logging)
+- [ ] Commit messages are clear
+- [ ] Rebased on latest main
+- [ ] Ready for production
+
+### Review Guidelines
+
+**Good feedback:**
+```
+Why: The user_id parameter isn't validated.
+Where: Line 42
+What: Add validation: if not user_id or not isinstance(user_id, int): raise ValueError
+Alternative: Use Pydantic model for automatic validation
+```
+
+**Bad feedback:**
+```
+- "This is wrong"
+- "I wouldn't do it this way"
+- Tone policing or personal attacks
+```
+
+### Response Time
+
+- **Urgent PRs** (hotfixes) — 30 minutes
+- **Normal PRs** — 4 hours
+- **Non-urgent** — 24 hours
+
+## Testing Standards
+
+### Test Coverage
+
+Minimum **80%** code coverage on production code.
+
+```
+src/auth/         95% (critical)
+src/utils/        85% (used everywhere)
+src/migrations/   50% (usually doesn't change)
+```
+
+### Test Types
+
+**Unit tests** (fastest)
+- Test single function/class in isolation
+- Mock external dependencies
+- Fast feedback loop
+
+**Integration tests** (slower)
+- Test multiple components together
+- Use real database (test DB)
+- Verify workflows
+
+**End-to-end tests** (slowest)
+- Test entire flow from user perspective
+- Use staging environment
+- Run before production deployment
+
+### Example
+
+```python
+# Unit test
+def test_user_creation():
+    user = User(email="test@example.com", name="Test")
+    assert user.email == "test@example.com"
+
+# Integration test
+def test_user_signup_flow():
+    # Create user via API
+    response = client.post("/api/users", json={...})
+    assert response.status_code == 201
+
+    # Verify user in database
+    user = User.query.get(response.json["id"])
+    assert user.email == "test@example.com"
+```
+
+## Code Style
+
+### Python
+- Use **Black** for formatting
+- Use **Ruff** for linting
+- Docstrings for public functions
+- Type hints where helpful
+
+### Go
+- Use **gofmt** for formatting (built-in)
+- Use **golangci-lint** for linting
+- Comments for exported functions (above the declaration)
+- Error handling must be explicit
+
+### General Standards
+- Max line length: 100 characters
+- Meaningful variable names
+- DRY (Don't Repeat Yourself)
+- Single responsibility principle
+
+## Documentation
+
+### Code Comments
+
+**Avoid obvious comments:**
+```python
+# Increment counter
+counter += 1
+```
+
+**Write useful comments:**
+```python
+# Multiply by 1000 to convert seconds to milliseconds
+timestamp_ms = timestamp * 1000
+```
+
+### Function Documentation
+
+```python
+def calculate_discount(price: float, discount_percent: float) -> float:
+    """Calculate price after discount.
+
+    Args:
+        price: Original price in dollars
+        discount_percent: Discount percentage (0-100)
+
+    Returns:
+        Price after discount applied
+
+    Raises:
+        ValueError: If discount_percent < 0 or > 100
+    """
+    if not 0 <= discount_percent <= 100:
+        raise ValueError("Discount must be 0-100%")
+
+    return price * (1 - discount_percent / 100)
+```
+
+### README
+
+Every project needs a README:
+- What is it?
+- How to run it locally?
+- How to deploy it?
+- How to contribute?
+- Troubleshooting section
+
+---
+
+## Documentation
+
+- [Architecture](./architecture) - System design
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Terminology](./terminology) - Common definitions

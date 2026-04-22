@@ -1,0 +1,245 @@
+---
+sidebar_position: 1
+title: Code Review
+---
+
+# Code Review
+
+What to look for when reviewing code. Every reviewer should ensure code quality, maintainability, and team consistency.
+
+## Core Principle
+
+The standard of code review is **we want every piece of code to improve the codebase**. Reviews should be thorough, kind, and focused on helping developers grow.
+
+## Design
+
+The most important aspect of code review is overall design.
+
+- Do interactions between code pieces make sense?
+- Does this change belong here, or in a library?
+- Does it integrate well with the rest of the system?
+- Is now the right time to add this functionality?
+- Could this be simpler or more elegant?
+
+**Key question:** Would you be confident maintaining this code in 6 months?
+
+## Functionality
+
+Does the code do what the developer intended? Is what they intended good for users?
+
+**For the code reviewer:**
+- Think about edge cases
+- Look for concurrency problems
+- Think like an end-user
+- Check for obvious bugs by reading code
+
+**Validation:**
+- For user-facing changes (UI, APIs) - ask for a demo or patch it yourself
+- For concurrent code - carefully think through race conditions and deadlocks
+- For data operations - verify correctness with example inputs
+
+**Key question:** Will this code behave correctly in production?
+
+## Complexity
+
+Is the code more complex than necessary?
+
+**Check at every level:**
+- Individual lines too complex?
+- Functions too long or hard to understand?
+- Classes doing too much?
+- Data structures confusing?
+
+**Complexity warning signs:**
+- Takes > 5 minutes to understand what a function does
+- Needs multiple levels of abstraction to follow logic
+- Too generic for the current problem
+- Over-engineered for speculative future needs
+
+**Key rule:** Solve the problem you know exists today, not the one you speculate might exist tomorrow.
+
+## Tests
+
+Ask for appropriate tests: unit, integration, or end-to-end.
+
+**Test requirements:**
+- Tests added in same PR as production code (except emergencies)
+- Tests actually fail when code is broken
+- Tests don't produce false positives
+- Each test makes simple, useful assertions
+- Tests are separated by method appropriately
+
+**Remember:** Tests are code. Don't accept complexity in tests just because they're not production code.
+
+**Key question:** If someone changes the code, will the tests catch the break?
+
+## Naming
+
+Did the developer pick good names?
+
+**Good naming:**
+- Long enough to fully communicate what something is
+- Short enough to read easily
+- Searchable and unambiguous
+
+**Bad naming:**
+- Single letters (except loop counters)
+- Abbreviations that aren't universally known
+- Names that don't match what the code does
+
+**Key principle:** Names should be self-documenting.
+
+## Comments
+
+Comments should explain **why**, not **what**. The code should explain what it does.
+
+**Good comments:**
+- Explain reasoning behind decisions
+- Flag edge cases or gotchas
+- Clarify complex algorithms (regex, math, etc.)
+- Note TODOs or future improvements
+
+**Bad comments:**
+```python
+# Increment counter
+counter += 1
+
+# Loop through users
+for user in users:
+```
+
+**Good comments:**
+```python
+# We use a queue here instead of direct calls to allow
+# the user service to be deployed independently
+queue.enqueue(user_event)
+
+# Multiply by 1000 to convert seconds to milliseconds
+timestamp_ms = timestamp * 1000
+```
+
+**Also check:** Remove outdated comments, completed TODOs, and comments warning against the change.
+
+## Style
+
+Refer to project style guides.
+
+**Python:** Black (formatter) + Ruff (linter)
+**Go:** gofmt (formatter) + golangci-lint (linter)
+
+**Nits vs. Blockers:**
+- Use "Nit:" prefix for style preferences that aren't critical
+- Don't block PRs on personal style preferences
+- Style guide is the authority when it applies
+
+**Major style changes:** Should be separate PRs from functional changes (makes diffs, merges, rollbacks harder).
+
+## Consistency
+
+**Priority order:**
+1. Style guide requirements (highest priority)
+2. Style guide recommendations
+3. Existing codebase patterns (lowest priority)
+
+If code is inconsistent with style guide, the style guide wins. If existing code violates the guide, ask the author to file a bug and add a TODO for cleanup.
+
+## Documentation
+
+Check that documentation is updated when the PR changes:
+
+- How users build/test/interact/release code
+- READMEs, runbooks, or operational guides
+- Function/class documentation (what it does, how to use it)
+- Deprecation notices for removed code
+
+**Key principle:** Documentation should be updated in the same PR as code changes.
+
+## Every Line
+
+Review every line of code assigned to you.
+
+**You should:**
+- Understand what all code is doing
+- Carefully scrutinize human-written functions/classes
+- Can be quicker with data files or generated code
+
+**If it's hard to understand:**
+- Ask the developer to clarify
+- It's not just about you—future developers will struggle too
+- Make sure someone qualified reviews complex areas (security, concurrency, etc.)
+
+## Context
+
+Look at the code in broader context.
+
+**Check:**
+- The whole function/file, not just changed lines
+- How changes fit into the overall system
+- Whether the change improves or degrades code health
+
+**Red flag:** Small changes that degrade code health compound over time. Prevent them early.
+
+## Good Things
+
+Tell developers when they do something right.
+
+- Compliment good design decisions
+- Acknowledge well-written tests
+- Praise clear naming or comments
+- Recognize how they addressed feedback
+
+Mentoring includes both showing what's wrong and recognizing what's right.
+
+## Code Review Checklist
+
+Before approving a PR, verify:
+
+- [ ] Design is sound
+- [ ] Functionality is correct for users
+- [ ] Complexity is justified
+- [ ] Tests are comprehensive and correct
+- [ ] Names are clear
+- [ ] Comments explain why, not what
+- [ ] Documentation is updated
+- [ ] Code follows style guide
+- [ ] Edge cases are handled
+- [ ] No security vulnerabilities
+- [ ] No performance regressions
+- [ ] Every line understood
+
+## Common Review Mistakes
+
+**Don't:**
+- Block on personal preference (use "Nit:" instead)
+- Require perfection when good-enough works
+- Review without understanding the code
+- Focus only on problems, not good practices
+- Review code you're not qualified to judge (escalate instead)
+
+**Do:**
+- Be kind and encouraging
+- Explain the reasoning behind feedback
+- Offer alternatives and suggestions
+- Acknowledge good work
+- Focus on code health, not ego
+
+## Response Time
+
+- **Urgent PRs** (hotfixes) - 30 minutes
+- **Normal PRs** - 4 hours
+- **Non-urgent** - 24 hours
+
+---
+
+## Documentation
+
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Architecture](./architecture) - System design
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

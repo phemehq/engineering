@@ -1,0 +1,232 @@
+---
+sidebar_position: 5
+title: Security
+---
+
+# Security
+
+Encryption, secrets management, access control, and compliance.
+
+## Core Principles
+
+- **Defense in depth** - Multiple layers, no single point of failure
+- **Least privilege** - Every user/service gets minimum required access
+- **Zero trust** - Verify everything, trust nothing
+- **Encrypt in transit and at rest** - Default, not optional
+
+## Encryption
+
+### In Transit (TLS/SSL)
+
+**Rule:** HTTPS everywhere, always.
+
+```
+- Don't use plain HTTP anywhere
+- Use HTTPS for all external traffic
+- Use mTLS for service-to-service communication
+```
+
+**Implementation:**
+- Enforce HSTS (HTTP Strict Transport Security)
+- Use TLS 1.3 minimum
+- Pin certificates for critical APIs
+- Rotate certificates before expiry
+
+### At Rest
+
+**Encrypted by default:**
+- Databases (encryption enabled)
+- Backups (encrypted and tested for recovery)
+- File storage (S3 with KMS)
+- Logs (if they contain sensitive data)
+
+**Example (AWS):**
+```hcl
+resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
+  bucket = aws_s3_bucket.files.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
+      kms_master_key_id = aws_kms_key.s3.arn
+    }
+  }
+}
+```
+
+## Secrets Management
+
+**Never commit secrets to Git.** Never.
+
+### Secret Categories
+
+**Rotation-required (90 days):**
+- Database passwords
+- API keys
+- OAuth tokens
+
+**Rotation-required (1 year):**
+- SSH keys
+- TLS certificates
+
+**Store in vault (AWS Secrets Manager, HashiCorp Vault):**
+- All API credentials
+- Database passwords
+- Private keys
+- Encryption keys
+
+### Secrets in Code
+
+```python
+# Wrong
+db_password = "super_secret_123"
+
+# Right
+db_password = os.environ.get("DB_PASSWORD")
+```
+
+**In CI/CD:** Use secrets as protected variables, never log them.
+
+### SSH Keys
+
+- Generate with `ssh-keygen -t ed25519`
+- Rotate every 12 months
+- Use separate keys per environment
+- Never share private keys
+
+## Access Control (RBAC)
+
+### Principle of Least Privilege
+
+Every user/service gets minimum required permissions.
+
+**Example roles:**
+- **Viewer** - Can read resources
+- **Developer** - Can read + deploy to staging
+- **Operator** - Can deploy to production, manage infrastructure
+- **Admin** - Full access (rare, avoid)
+
+### Implementation
+
+**AWS IAM policy:**
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::bucket/uploads/*"
+    }
+  ]
+}
+```
+
+### Access Reviews
+
+- Monthly: Review who has access to production
+- Quarterly: Audit service account permissions
+- Remove access immediately on departure
+
+## Authentication & Authorization
+
+### Password Policy
+- Minimum 12 characters
+- No reuse of last 5 passwords
+- Expire every 90 days
+- Account lockout after 5 failed attempts
+
+### Multi-Factor Authentication
+- Required for production access
+- Required for Git operations
+- Required for admin functions
+
+### Session Management
+- Max session duration: 8 hours
+- Automatic logout on inactivity: 30 minutes
+- Logout on password change
+- Logout all sessions on security event
+
+## Compliance
+
+### Data Classification
+
+**Public:** No restrictions (documentation, marketing)
+**Internal:** Company only (architecture, roadmaps)
+**Confidential:** Limited access (API keys, customer data)
+**Restricted:** Maximum controls (credit cards, SSNs)
+
+### Data Handling
+
+- Know what data you have
+- Know where it's stored
+- Know who can access it
+- Know when it expires (retention policy)
+
+### Audit & Logging
+
+**Log everything:**
+- Who did what, when, where
+- Authentication attempts
+- Authorization changes
+- Production deployments
+- Data access
+
+**Retain logs:**
+- 90 days: Hot storage (searchable)
+- 1 year: Archive storage
+- Delete after compliance period
+
+### Common Compliance Frameworks
+
+- **SOC 2** - Security, availability, integrity
+- **GDPR** - Data privacy (EU)
+- **HIPAA** - Healthcare data
+- **PCI-DSS** - Credit card data
+
+Consult with legal/compliance before handling regulated data.
+
+## Security Checklist
+
+Before deploying:
+- [ ] No secrets in code or logs
+- [ ] HTTPS enabled
+- [ ] Authentication required
+- [ ] Authorization enforced
+- [ ] Input validation done
+- [ ] Rate limiting enabled
+- [ ] Security headers set
+- [ ] Dependencies scanned for vulnerabilities
+- [ ] API keys rotated
+- [ ] Access reviewed
+
+## Common Vulnerabilities (OWASP Top 10)
+
+1. **Injection** - SQL injection, command injection
+2. **Broken Authentication** - Weak passwords, session fixation
+3. **Sensitive Data Exposure** - Unencrypted data at rest/transit
+4. **XML External Entities (XXE)** - XML parsing vulnerabilities
+5. **Broken Access Control** - Missing/weak authorization
+6. **Security Misconfiguration** - Default credentials, verbose errors
+7. **Cross-Site Scripting (XSS)** - User input not sanitized
+8. **Insecure Deserialization** - Untrusted object serialization
+9. **Using Components with Known Vulnerabilities** - Unpatched dependencies
+10. **Insufficient Logging & Monitoring** - Can't detect attacks
+
+**Defense:** Validate input, sanitize output, keep dependencies updated, scan code.
+
+---
+
+## Documentation
+
+- [Architecture](./architecture) - System design
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions
