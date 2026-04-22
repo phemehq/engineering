@@ -88,7 +88,7 @@
   margin: 0 0 1rem 0;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #c44400;
+  color: #c44400 !important;
   line-height: 1.5;
   text-transform: uppercase;
   letter-spacing: 0.5px;
