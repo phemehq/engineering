@@ -21,3 +21,49 @@
   align-items: center;
   justify-content: center;
 }
+
+.githubCta {
+  padding: 3rem 0;
+  background: #f5f5f5;
+  width: 100%;
+}
+
+.ctaContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ctaContent > div {
+  flex: 1;
+  min-width: 300px;
+}
+
+.ctaContent h2 {
+  margin-bottom: 0.5rem;
+  color: #2d2d2d;
+  font-size: 2rem;
+}
+
+.ctaContent p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.githubButton {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 996px) {
+  .ctaContent {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ctaContent > div {
+    min-width: auto;
+  }
+}

@@ -30,6 +30,35 @@ function HomepageHeader() {
   );
 }
 
+function GitHubCTA() {
+  return (
+    <section className={styles.githubCta}>
+      <div className="container">
+        <div className={styles.ctaContent}>
+          <div>
+            <Heading as="h2">Like what you see?</Heading>
+            <p>
+              Star us on GitHub and join the community building better
+              engineering practices
+            </p>
+          </div>
+          <a
+            href="https://github.com/phemehq/pheme"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={clsx(
+              "button button--primary button--lg",
+              styles.githubButton,
+            )}
+          >
+            ⭐ Star on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -41,6 +70,7 @@ export default function Home(): ReactNode {
       <main>
         <HomepageFeatures />
       </main>
+      <GitHubCTA />
     </Layout>
   );
 }
