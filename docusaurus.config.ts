@@ -67,12 +67,6 @@ const config: Config = {
       },
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
-          position: "left",
-          label: "Documentation",
-        },
-        {
           href: "https://github.com/phemehq/engineering",
           label: "GitHub",
           position: "right",
