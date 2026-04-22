@@ -1,0 +1,139 @@
+---
+sidebar_position: 1.5
+title: Code Review Speed
+---
+
+# Code Review Speed
+
+Why code reviews should be fast and how to maintain speed without sacrificing quality.
+
+## Why Fast Code Reviews Matter
+
+We optimize for team velocity, not individual developer speed. When code reviews are slow, several problems occur:
+
+**Team velocity decreases** - Features and bug fixes are delayed days, weeks, or months as each PR waits for review and re-review.
+
+**Developer frustration grows** - If reviewers respond every few days with major change requests, it's frustrating. But if they respond quickly with the same requests, the frustration disappears. Most complaints about code review are solved by speed.
+
+**Code health suffers** - Slow reviews pressure developers to submit lower-quality PRs. They also discourage refactorings and improvements.
+
+## Response Time Standards
+
+**If you're not in a focused task:** Review code shortly after it comes in.
+
+**Maximum response time:** One business day to respond to a code review request.
+
+**Goal:** A typical PR should get multiple review rounds (if needed) within a single day.
+
+## Speed vs. Flow State
+
+**Don't interrupt focused work.** If you're in the middle of coding, don't interrupt yourself to review. Research shows it takes a long time to regain flow state after interruption. The team pays a higher cost when you lose your coding momentum.
+
+**Wait for natural breaks:**
+- When your current task is completed
+- After lunch
+- Returning from a meeting
+- Coming back from a break
+
+Then respond to review requests at those times.
+
+## Fast Responses Matter Most
+
+Focus on **response time**, not how long the entire review process takes.
+
+Even if the full review is slow, quick individual responses significantly reduce developer frustration with code reviews.
+
+**If you're too busy for a full review:**
+- Let the developer know when you'll get to it
+- Suggest other reviewers who might be faster
+- Provide initial broad comments on design
+- (Don't interrupt coding to do this—send at a break point)
+
+## Cross-Time-Zone Reviews
+
+When reviewers and developers are in different time zones:
+
+- Try to respond while the developer still has time to act that day
+- If they're done for the day, aim to complete review before they start the next day
+
+This prevents developers from waiting a full day just to get feedback.
+
+## LGTM With Comments
+
+You can approve a PR while leaving unresolved comments when:
+
+**Developer will address them** - You're confident they'll fix remaining issues.
+
+**Comments aren't required** - The feedback is optional or educational.
+
+**Suggestions are minor** - Sort imports, fix typos, apply suggested fixes, remove unused deps, etc.
+
+**Specify your intent** in the comment so it's clear.
+
+**Especially useful for time zones** - Prevents developers waiting a full day for approval while minor issues remain.
+
+## Large PRs
+
+When a PR is too large to review quickly:
+
+**Ask for smaller PRs** - Request the developer split it into smaller PRs that build on each other. Often possible and helpful, even if it takes extra work.
+
+**If it can't be split:**
+- Comment on overall design
+- Send it back for improvement
+- Unblock the developer to move forward
+- Don't sacrifice code health to save time
+
+**Goal:** Always help the developer move forward without compromising standards.
+
+## Continuous Improvement
+
+Following these guidelines leads to improvement over time:
+
+- Developers learn standards and send better PRs from the start
+- Less review time needed each round
+- Reviewers respond quickly with minimal latency
+- Process gets faster and faster
+
+**Don't compromise standards** for imagined speed gains. It won't actually make things faster in the long run.
+
+## Emergencies
+
+In true emergencies, code review quality guidelines can be relaxed. However, see your incident response guidelines for what actually qualifies as an emergency.
+
+Most "urgent" changes aren't actually emergencies—they just feel urgent. When in doubt, follow normal review standards.
+
+## Practical Tips
+
+**Set response expectations:**
+- Communicate availability (e.g., "reviewing code Tuesdays & Thursdays")
+- Help other reviewers pick up PRs when you're unavailable
+
+**Keep reviews moving:**
+- Respond quickly even with minor comments
+- Approve with minor comments when appropriate
+- Flag blockers early (design issues) before reviewing line-by-line
+
+**Respect other's time:**
+- As a developer: make PRs reviewable (clear, well-tested, appropriately sized)
+- As a reviewer: respond promptly so developers aren't blocked
+
+**Document decisions:**
+- Link to relevant PRs in discussions
+- Update code review guidelines based on patterns you see
+- Share lessons learned with the team
+
+---
+
+## Documentation
+
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Architecture](./architecture) - System design
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

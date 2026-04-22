@@ -1,0 +1,281 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* Force light mode */
+html {
+  --ifm-color-primary: #c44400 !important;
+  --ifm-color-primary-dark: #a83600 !important;
+  --ifm-color-primary-darker: #9b3200 !important;
+  --ifm-color-primary-darkest: #7d2900 !important;
+  --ifm-color-primary-light: #d85a1a !important;
+  --ifm-color-primary-lighter: #e06b2e !important;
+  --ifm-color-primary-lightest: #e87d42 !important;
+  --ifm-color-secondary: #2d2d2d !important;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(196, 68, 0, 0.1) !important;
+  --ifm-background-color: #ffffff !important;
+  --ifm-background-surface-color: #f5f5f5 !important;
+  --ifm-color-content: #2d2d2d !important;
+}
+
+/* Hero background pattern */
+.hero--primary {
+  background:
+    linear-gradient(135deg, #c44400 0%, #d85a1a 50%, #c44400 100%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.1) 10px,
+      rgba(255, 255, 255, 0.1) 20px
+    ) !important;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* PhemeHQ Engineering Brand Colors */
+:root {
+  --ifm-color-primary: #c44400;
+  --ifm-color-primary-dark: #a83600;
+  --ifm-color-primary-darker: #9b3200;
+  --ifm-color-primary-darkest: #7d2900;
+  --ifm-color-primary-light: #d85a1a;
+  --ifm-color-primary-lighter: #e06b2e;
+  --ifm-color-primary-lightest: #e87d42;
+  --ifm-color-secondary: #2d2d2d;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(196, 68, 0, 0.1);
+}
+
+/* Brand-specific enhancements */
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(45, 45, 45, 0.1);
+}
+
+.navbar__brand {
+  color: #c44400;
+  font-weight: 700;
+}
+
+/* Navbar text color in light mode */
+.navbar__item {
+  color: #2d2d2d !important;
+}
+
+.navbar__link {
+  color: #2d2d2d !important;
+}
+
+.navbar__link:hover {
+  color: #c44400 !important;
+}
+
+.docusaurus-highlighted-code-line {
+  background-color: rgba(196, 68, 0, 0.1);
+}
+
+a {
+  color: #c44400;
+}
+
+a:hover {
+  color: #a83600;
+}
+
+/* Button visibility in light mode */
+.button--secondary {
+  background-color: #2d2d2d;
+  color: #ffffff !important;
+  border: 2px solid #c44400;
+  font-weight: 600;
+}
+
+.button--secondary:hover {
+  background-color: #1a1a1a;
+  border-color: #a83600;
+  color: #ffffff !important;
+}
+
+/* Footer visibility in light mode */
+.footer {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.footer__link-item {
+  color: #e8e8e8 !important;
+}
+
+.footer__link-item:hover {
+  color: #e87d42 !important;
+}
+
+.footer__title {
+  color: #ffffff;
+}
+
+.footer__copyright {
+  color: #c0c0c0;
+  text-align: center;
+  width: 100%;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer layout - Resources left, Links right, Copyright centered */
+.footer__bottom {
+  display: table;
+  width: 100%;
+  margin-bottom: 30px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.footer__col {
+  display: table-cell;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__col:first-child {
+  text-align: left;
+  width: 1%;
+  white-space: nowrap;
+  padding-right: 60px;
+}
+
+.footer__col:last-child {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+  padding-left: 60px;
+}
+
+.footer__copyright {
+  text-align: center;
+  width: 100%;
+  clear: both;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar text visibility */
+.sidebar__item {
+  color: #2d2d2d !important;
+}
+
+.sidebar__link {
+  color: #2d2d2d !important;
+}
+
+.sidebar__link--active {
+  color: #c44400 !important;
+}
+
+.sidebar__item--category {
+  color: #2d2d2d !important;
+}
+
+/* Menu items (Docusaurus sidebar) */
+.menu {
+  color: #2d2d2d !important;
+}
+
+.menu__link {
+  color: #2d2d2d !important;
+}
+
+.menu__link--active {
+  color: #c44400 !important;
+}
+
+.menu__list-item {
+  color: #2d2d2d !important;
+}
+
+.menu__list-item-collapsible {
+  color: #2d2d2d !important;
+}
+
+.menu__caret {
+  color: #2d2d2d !important;
+}
+
+/* Table of contents visibility */
+.table-of-contents {
+  color: #666666 !important;
+}
+
+.table-of-contents a {
+  color: #666666 !important;
+}
+
+.table-of-contents a:hover {
+  color: #c44400 !important;
+}
+
+.table-of-contents__link {
+  color: #666666 !important;
+}
+
+.table-of-contents__link--active {
+  color: #c44400 !important;
+}
+
+.table-of-contents li a.table-of-contents__link--active {
+  color: #c44400 !important;
+}
+
+/* Code block text visibility */
+pre {
+  color: #2d2d2d !important;
+}
+
+code {
+  color: #2d2d2d !important;
+}
+
+/* All text colors dark */
+body,
+p,
+li,
+span,
+div {
+  color: #2d2d2d !important;
+}
+
+/* Documentation content background pattern */
+.main {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(196, 68, 0, 0.03) 2px,
+      rgba(196, 68, 0, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(196, 68, 0, 0.02) 2px,
+      rgba(196, 68, 0, 0.02) 4px
+    );
+}
+
+/* Subtle diagonal pattern on doc wrapper */
+.docusaurus-mt-lg {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(196, 68, 0, 0.015) 20px,
+    rgba(196, 68, 0, 0.015) 40px
+  );
+}

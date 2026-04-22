@@ -1,0 +1,216 @@
+---
+sidebar_position: 7
+title: Terminology
+---
+
+# Terminology
+
+Common terms and definitions used in our engineering practices.
+
+## A
+
+**ACL (Access Control List)**
+Policy that defines which users/services can access which resources.
+
+**API (Application Programming Interface)**
+Contract that defines how software components communicate. Usually HTTP-based (REST, GraphQL).
+
+**ACID (Atomicity, Consistency, Isolation, Durability)**
+Properties of reliable database transactions. Atomicity = all or nothing. Consistency = valid state. Isolation = concurrent transactions don't interfere. Durability = committed data survives failures.
+
+**Authentication**
+Verifying identity: "Are you who you claim to be?" (username + password)
+
+**Authorization**
+Granting permissions: "Are you allowed to do this?" (roles + policies)
+
+## B
+
+**Blast Radius**
+Scope of systems/users affected by a failure. Small blast radius = failure isolated. Large blast radius = cascading failures.
+
+**Blue-Green Deployment**
+Running two identical environments. Deploy to inactive one, switch traffic when ready. Fast rollback by switching back.
+
+## C
+
+**CQRS (Command Query Responsibility Segregation)**
+Separating read and write operations into different services/databases. Reads are cheap, writes are reliable.
+
+**CI/CD (Continuous Integration / Continuous Deployment)**
+Automated testing and deployment pipeline. Every commit is tested + deployed.
+
+**Consensus**
+Multiple parties agreeing on a value. In distributed systems, hard to achieve.
+
+**CRUD (Create, Read, Update, Delete)**
+Four basic operations for data persistence.
+
+## D
+
+**DRY (Don't Repeat Yourself)**
+Avoid duplicating logic. If you find yourself writing the same code twice, extract it.
+
+**Dead Letter Queue**
+Message queue for messages that failed to process. Separates failures from main system.
+
+## E
+
+**Eventual Consistency**
+System is consistent eventually, not immediately. Trade-off for availability and partition tolerance.
+
+## F
+
+**FIFO (First In, First Out)**
+Queue where first item added is first item removed. Maintains order. (vs LIFO = stack)
+
+**Fully Qualified Domain Name (FQDN)**
+Complete domain name: `api.example.com` (vs `api` which is relative)
+
+## G
+
+**Graceful Degradation**
+Service degrades functionality under load, doesn't crash. E.g., cache miss doesn't break the page.
+
+**GRPC**
+High-performance RPC framework. Binary protocol, HTTP/2, strong typing.
+
+## H
+
+**Hash**
+One-way function that converts input to fixed-size output. Deterministic (same input = same output).
+
+**Idempotent**
+Operation is safe to execute multiple times. Result is the same regardless of execution count. E.g., `GET /user/123` is idempotent (doesn't change state).
+
+**Immutable**
+Cannot be changed after creation. Benefits: simpler reasoning, thread-safe, cache-friendly.
+
+## J
+
+**JWT (JSON Web Token)**
+Self-contained token for authentication. Contains claims (user ID, role, expiry) signed by server. Stateless.
+
+## K
+
+**Key-Value Store**
+Simple database: lookup by key, get value. Fast, simple, limited query capability. (Redis, Memcached)
+
+## L
+
+**Latency**
+Time to process a request. Measured in milliseconds. Related to throughput but different.
+
+**LGTM**
+"Looks Good To Me" - Code review approval.
+
+## M
+
+**Mutual TLS (mTLS)**
+TLS where both client and server authenticate each other. Higher security than regular TLS.
+
+## N
+
+**NoSQL**
+Non-relational database. Trades ACID for scalability. (MongoDB, DynamoDB, Cassandra)
+
+## O
+
+**Observability**
+Can you understand system behavior from outputs (logs, metrics, traces)? Different from monitoring (which tells you if something is wrong).
+
+**OAuth2**
+Standard for delegated authorization. "Let me sign in with GitHub" instead of sharing password.
+
+## P
+
+**Partitioning**
+Splitting data/load across multiple servers. By time, geography, or hash of key.
+
+**Postmortem**
+Blameless analysis of incident. What happened, why, what's the fix?
+
+**P99 Latency**
+99th percentile latency. 1% of requests are slower than this. Important for user experience.
+
+## Q
+
+**Queue**
+FIFO data structure. Add to end, remove from front. Decouples producers from consumers.
+
+## R
+
+**RPC (Remote Procedure Call)**
+Calling function on another server as if it were local. (gRPC, XML-RPC, JSON-RPC)
+
+**REST (Representational State Transfer)**
+Architectural style for APIs. Resources are identified by URLs, operations are HTTP verbs.
+
+**Rollback**
+Revert to previous version. Practice rollbacks before they're needed in emergency.
+
+## S
+
+**SLA (Service Level Agreement)**
+Contract with customers about availability. "99.9% uptime" or credits if we miss it.
+
+**SLI (Service Level Indicator)**
+Measurable metric of service health. E.g., "error rate < 0.1%".
+
+**SLO (Service Level Objective)**
+Target for SLI. E.g., "maintain 99.9% availability over 30 days".
+
+**Saturation**
+How full a resource is. CPU at 95% = highly saturated. Measure for scaling.
+
+**Sharding**
+Horizontal partitioning. Each shard holds a subset of data. Increases complexity, enables scale.
+
+**Synchronous**
+Caller waits for response. Simple but blocks. Prone to cascading failures.
+
+## T
+
+**Throughput**
+Number of operations per second. Related to latency but different. High latency ≠ low throughput if parallelized.
+
+**TLS (Transport Layer Security)**
+Encryption protocol for HTTPS. Replaces older SSL.
+
+## U
+
+**Utilization**
+Percentage of resource being used. 70% CPU = well-utilized. 95% = saturation approaching.
+
+## V
+
+**Vertical Scaling**
+Making a single server bigger (more CPU, RAM). Limited by hardware.
+
+## W
+
+**Webhook**
+HTTP callback. System A calls HTTP endpoint on System B to notify of event.
+
+**Whitelist**
+List of allowed items. "Only these IPs can access this resource".
+
+## Z
+
+**Zero-Downtime Deployment**
+Deploy new version without service interruption. (Blue-green, canary, rolling restart)
+
+---
+
+## Documentation
+
+- [Architecture](./architecture) - System design
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews

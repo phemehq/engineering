@@ -1,0 +1,174 @@
+---
+sidebar_position: 1.7
+title: Code Review Comments
+---
+
+# How to Write Code Review Comments
+
+Guidelines for writing clear, kind, and helpful code review comments.
+
+## Core Principles
+
+**Be kind** - Comments affect real people who will read them.
+
+**Explain your reasoning** - Help developers understand why you're making the comment.
+
+**Balance direction** - Sometimes point out problems and let developers decide. Sometimes give explicit guidance.
+
+**Encourage improvement** - Suggest simplifying code or adding comments instead of just explaining complexity.
+
+## Courtesy
+
+Always comment on the **code**, never on the **developer**.
+
+**Bad comment:**
+> "Why did you use threads here when there's obviously no benefit to be gained from concurrency?"
+
+**Good comment:**
+> "The concurrency model here is adding complexity to the system without any actual performance benefit that I can see. Because there's no performance benefit, it's best for this code to be single-threaded instead of using multiple threads."
+
+The good version:
+- Explains what you see
+- Explains why it's a problem
+- Suggests a solution
+- Doesn't attack the developer
+
+## Explain Why
+
+Help developers understand your reasoning. This is especially important for:
+
+- Best practices being followed
+- How your suggestion improves code health
+- Why a different approach would be better
+
+Don't always include detailed explanation, but when the comment might be challenging, help the developer understand your intent.
+
+## Giving Guidance
+
+**The developer is responsible for fixing the PR**, not the reviewer.
+
+**Balance two approaches:**
+
+**Point out the problem, let them decide:**
+- Helps developers learn
+- Easier to review
+- Often results in better solutions (they're closer to the code)
+
+**Give explicit guidance:**
+- Sometimes more helpful
+- Appropriate for critical issues
+- Acceptable when you have the best solution
+
+**Primary goal:** Get the best PR possible.
+
+**Secondary goal:** Help developers learn so reviews become easier over time.
+
+## Compliment Good Work
+
+Remember to comment on things you like, not just what needs improvement.
+
+**Examples to praise:**
+- Developer cleaned up a messy algorithm
+- Excellent test coverage added
+- You learned something from the code
+- Good naming or documentation
+
+Always explain **why** you liked it. This reinforces good practices.
+
+## Label Comment Severity
+
+Make your expectations clear by labeling comment severity:
+
+**Nit:** Minor issue. Technically should do it, but won't hugely impact things.
+
+**Optional (or Consider):** Good idea, but not strictly required.
+
+**FYI:** Not required in this PR, but interesting to think about for the future.
+
+**Example comments:**
+```
+Nit: Consider using a const here instead of let
+
+Optional: You could also use a Set instead of an array for O(1) lookups
+
+FYI: When you have time, look into X library which handles this pattern
+```
+
+**Benefits:**
+- Makes review intent explicit
+- Helps authors prioritize feedback
+- Avoids misunderstandings
+- Prevents treating all comments as mandatory
+
+## Accepting Explanations
+
+If you ask a developer to explain code you don't understand:
+
+**They should rewrite the code more clearly** - This is the preferred response.
+
+**Code comments are acceptable in limited cases:**
+- When you're reviewing unfamiliar code
+- When the explanation wouldn't be obvious to other code readers
+- Not when just explaining overly complex code
+
+**Never accept:**
+- Explanations only in the code review tool
+- These don't help future code readers
+- They disappear after the PR is merged
+
+## Best Practices
+
+**Be specific** - "This function is too complex" is less helpful than "This function has 15 different paths and is hard to follow. Consider breaking it into smaller functions."
+
+**Ask questions** - "Did you consider using X instead?" invites discussion rather than demanding change.
+
+**Suggest, don't command** - "You might want to..." vs "You must..."
+
+**Use examples** - Show what you mean, don't just describe it.
+
+**Acknowledge good solutions** - "I like how you handled X" encourages continued excellence.
+
+**Keep it focused** - Don't overload with feedback. Prioritize critical issues.
+
+## Comment Examples
+
+**Design issue (critical):**
+> "The current approach stores all user data in memory, which won't scale beyond a few thousand users. Since we're expecting millions, we should use a database instead. This also improves consistency guarantees."
+
+**Style issue (nit):**
+> "Nit: Prefer `const` over `let` when the variable doesn't change. Clarifies intent to future readers."
+
+**Testing gap (important):**
+> "Optional: Consider adding a test case for when X is null. The current tests don't cover that edge case."
+
+**Good practice (praise):**
+> "Really appreciate how you structured the error handling here. The explicit error types make it clear what can go wrong at each step."
+
+**Question (learning opportunity):**
+> "Did you consider using dependency injection for this? It would make testing easier and decouple the modules."
+
+## Response Patterns
+
+**For comments you disagree with:**
+> "I see your point, but my concern is X. Let me know if you see another way to address that."
+
+**For education/FYI comments:**
+> "FYI: In future PRs, you might look at using X pattern. Not necessary here, but worth exploring."
+
+**For clarification requests:**
+> "Can you help me understand why you chose Y over Z here? I want to learn your reasoning."
+
+---
+
+## Documentation
+
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Architecture](./architecture) - System design
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

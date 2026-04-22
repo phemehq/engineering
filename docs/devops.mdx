@@ -1,0 +1,127 @@
+---
+sidebar_position: 3
+title: DevOps
+---
+
+# DevOps
+
+CI/CD pipelines, infrastructure as code, and containerization standards.
+
+## CI/CD Standards
+
+Every change goes through the same pipeline:
+
+1. **Commit** - Push to feature branch
+2. **Test** - Run unit, integration, and linting checks
+3. **Build** - Create immutable artifact (Docker image)
+4. **Stage** - Deploy to staging environment
+5. **Manual approval** - Team reviews and approves
+6. **Deploy** - Release to production
+7. **Monitor** - Track error rates and performance
+
+### Pipeline Principles
+
+- **Fail fast** - Run quick checks first (linting, unit tests)
+- **Immutable artifacts** - Build once, deploy anywhere
+- **Environment parity** - Staging === Production (as much as possible)
+- **Automated rollback** - Know how to revert in 5 minutes
+- **Audit trail** - Every deployment is logged and traceable
+
+## Infrastructure as Code
+
+All infrastructure lives in Git:
+
+```
+├── terraform/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── modules/
+├── ansible/
+│   ├── playbooks/
+│   └── roles/
+└── docker-compose.yml
+```
+
+**Rules:**
+- No manual infrastructure changes
+- All changes via pull request
+- Apply changes via CI/CD pipeline
+- State files are protected and backed up
+
+## Docker Standards
+
+Every service must be containerizable:
+
+### Dockerfile Checklist
+- Multi-stage build (small final image)
+- Non-root user (security)
+- Health checks defined
+- Proper signal handling (SIGTERM)
+- Immutable, pinned base image versions
+
+### Example
+```dockerfile
+FROM node:20-alpine as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM node:20-alpine
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
+USER nodejs
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+HEALTHCHECK --interval=30s --timeout=10s CMD node healthcheck.js
+CMD ["node", "index.js"]
+```
+
+## Local Development
+
+Developers should mirror production locally:
+
+```bash
+docker-compose -f docker-compose-local.yml up
+```
+
+**Must include:**
+- Application services
+- Database (same version as prod)
+- Redis/cache (if used)
+- Mailhog for email testing
+- Localstack for AWS services
+
+## Deployments
+
+### Blue-Green Deployment
+- Run two identical environments
+- Switch traffic after validation
+- Quick rollback if needed
+
+### Canary Deployment
+- Route small % of traffic to new version
+- Monitor error rates and latency
+- Gradually increase traffic
+- Automatic rollback if threshold exceeded
+
+### Never
+- Rolling restarts without health checks
+- Direct SSH access to production
+- Manual commands in production
+- Database migrations without rollback plan
+
+---
+
+## Documentation
+
+- [Architecture](./architecture) - System design
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Style](./code-style) - Formatting and linting standards
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

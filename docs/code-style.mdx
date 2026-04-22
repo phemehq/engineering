@@ -1,0 +1,226 @@
+---
+sidebar_position: 2.2
+title: Code Style
+---
+
+# Code Style
+
+Standards and tools for consistent code formatting and quality across languages.
+
+## Philosophy
+
+Code style serves three purposes:
+
+1. **Readability** - Consistent formatting makes code easier to understand
+2. **Maintainability** - Standard patterns reduce cognitive load when reading unfamiliar code
+3. **Automation** - Formatters and linters handle style so humans focus on logic
+
+We follow established style guides for each language rather than inventing our own. This ensures compatibility with the broader community and reduces bikeshedding.
+
+## Python
+
+**Style Guide:** [PEP 8 - Style Guide for Python Code](https://peps.python.org/pep-0008/)
+
+**Formatter:** Black
+- Opinionated, no configuration (enforces one style)
+- Install: `uv tool install black`
+- Run: `black .`
+
+**Linter:** Ruff
+- Fast, drop-in replacement for flake8, pylint, isort, and others
+- Documentation: [Ruff - An extremely fast Python linter](https://docs.astral.sh/ruff/)
+- Install: `uv tool install ruff`
+- Run: `ruff check .` (lint), `ruff format .` (format)
+
+**Type Checking:** mypy (optional, but recommended)
+- Catches type errors before runtime
+- Use type hints for clarity: `def greet(name: str) -> str:`
+
+**Project Configuration:**
+```toml
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
+```
+
+## Go
+
+**Style Guide:** [Effective Go](https://google.github.io/styleguide/go/)
+
+**Formatter:** gofmt (built-in)
+- Part of standard Go installation
+- Run: `gofmt -w .`
+
+**Linter:** golangci-lint
+- Combines multiple linters (vet, ineffassign, staticcheck, etc.)
+- Documentation: [golangci-lint](https://golangci-lint.run/)
+- Install: `go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest`
+- Run: `golangci-lint run ./...`
+
+**Project Configuration (.golangci.yml):**
+```yaml
+linters:
+  enable:
+    - vet
+    - gofmt
+    - staticcheck
+    - ineffassign
+    - misspell
+
+linters-settings:
+  staticcheck:
+    go: "1.21"
+```
+
+**Go Conventions:**
+- Package names: `lowercase`, no underscores
+- Function names: `CamelCase` (exported), `camelCase` (unexported)
+- Variable names: Short for narrow scope, descriptive for wide scope
+- Interface names: `-er` suffix (`Reader`, `Writer`, `Handler`)
+- Error handling: Explicit, always check errors
+
+## TypeScript
+
+**Style Guide:** [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
+
+**Formatter:** Prettier
+- Opinionated, zero-config
+- Install: `npm install --save-dev prettier`
+- Run: `prettier --write .`
+
+**Linter:** ESLint with TypeScript support
+- Documentation: [typescript-eslint](https://typescript-eslint.io/)
+- Install: `npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin`
+
+**Project Configuration (.eslintrc.json):**
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-types": "warn",
+    "@typescript-eslint/no-unused-vars": "error"
+  }
+}
+```
+
+**TypeScript Conventions:**
+- Use strict mode: `"strict": true` in tsconfig.json
+- Explicit return types on functions
+- Avoid `any` type (use `unknown` if necessary)
+- Use interfaces for object shapes, types for aliases
+- Prefer `const` over `let` over `var`
+
+## Code Style Checklist
+
+Before committing, verify:
+
+**Python:**
+- [ ] Passes `black --check .`
+- [ ] Passes `ruff check .`
+- [ ] Type hints added to function signatures
+- [ ] Docstrings for public functions
+
+**Go:**
+- [ ] Passes `gofmt -l .` (no files needed formatting)
+- [ ] Passes `golangci-lint run ./...`
+- [ ] Error handling is explicit
+- [ ] Variable names are descriptive
+
+**TypeScript:**
+- [ ] Passes `prettier --check .`
+- [ ] Passes `eslint .`
+- [ ] Return types specified on functions
+- [ ] No `any` types (or justified with comment)
+
+## CI/CD Integration
+
+All projects should run formatters and linters in CI/CD:
+
+```yaml
+# Example: GitHub Actions
+- name: Format check
+  run: black --check .
+
+- name: Lint
+  run: ruff check .
+
+- name: Type check
+  run: mypy src/
+```
+
+Fail the build if:
+- Code doesn't match formatter output
+- Linter finds issues
+- Type checking fails
+
+## Common Issues
+
+**Issue: "But I don't like this style"**
+- Style consistency matters more than individual preference
+- The style guide is the authority, not your taste
+- Automated formatting removes the burden
+
+**Issue: "This style doesn't make sense for my code"**
+- Follow the style guide anyway (consistency across codebase)
+- If style guide is genuinely wrong, file an issue to update it
+- Don't create exceptions
+
+**Issue: "The linter is being too strict"**
+- Linter rules are community best practices
+- Disabling rules should be explicit with comments: `# noqa: E501`
+- If consistently disabling a rule, update project configuration
+
+## Additional References
+
+- **Thanos Project Coding Style Guide:** [Contributing - Coding Style Guide](https://github.com/thanos-io/thanos/blob/main/docs/contributing/coding-style-guide.md)
+- **Python:** [PEP 8](https://peps.python.org/pep-0008/), [Ruff Docs](https://docs.astral.sh/ruff/)
+- **Go:** [Effective Go](https://google.github.io/styleguide/go/), [golangci-lint](https://golangci-lint.run/)
+- **TypeScript:** [Google Style Guide](https://google.github.io/styleguide/tsguide.html), [typescript-eslint](https://typescript-eslint.io/)
+
+## Automating Style
+
+Add pre-commit hooks to catch style issues before pushing:
+
+```bash
+# Install pre-commit
+pip install pre-commit
+
+# Create .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.0.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.250
+    hooks:
+      - id: ruff
+```
+
+Then: `pre-commit install`
+
+Style enforcement becomes automatic—developers don't have to think about it.
+
+---
+
+## Documentation
+
+- [Architecture](./architecture) - System design
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Code Review Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [Security](./security) - Encryption and access control
+- [SRE](./sre) - Reliability and monitoring
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

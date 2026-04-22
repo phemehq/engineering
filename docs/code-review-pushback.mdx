@@ -1,0 +1,156 @@
+---
+sidebar_position: 1.9
+title: Handling Code Review Pushback
+---
+
+# Handling Pushback in Code Reviews
+
+How to respond when developers disagree with your review feedback.
+
+## Who Is Right?
+
+When a developer disagrees with your suggestion, first **consider if they are correct**.
+
+Often, developers are closer to the code than you are and have better insight about certain aspects. Ask yourself:
+
+- Does their argument make sense?
+- Does it make sense from a code health perspective?
+- Are they right?
+
+**If yes:** Tell them they're right and let the issue drop.
+
+**If no:** Explain why you believe your suggestion is correct. A good explanation shows:
+- You understand their reply
+- Additional information about why the change is needed
+- How it improves code health
+
+## When to Insist on Changes
+
+If you believe your suggestion will improve code health, **continue to advocate for the change** if the improvement justifies the work.
+
+**Remember:** Code health improves in small steps.
+
+Sometimes it takes several rounds of explanation before the point sinks in. Stay polite throughout and acknowledge that you hear them—you just don't agree.
+
+**Example:**
+> "I understand you want to move forward quickly. I still think we should refactor this method because X and Y are getting too complex. Let's do it now instead of in a follow-up, as follow-ups rarely happen. It should only take 30 minutes."
+
+## Don't Fear Upsetting Developers
+
+Reviewers often worry that insisting on improvements will upset developers.
+
+**Reality:**
+- Upsets are usually brief
+- Developers become thankful later for the quality improvement
+- Most developers don't get upset if comments are polite
+- Worry is often just in the reviewer's mind
+- Upsets come from comment tone, not from insisting on quality
+
+**The right approach:** Be polite in your comments and developers will respect your standards.
+
+## Don't Accept "I'll Fix It Later"
+
+A common pushback: "I'll clean this up in a later PR."
+
+**The problem:** This almost never happens.
+
+It's not because developers are irresponsible. They have lots of work and cleanup gets lost or forgotten. Experience shows:
+
+- If cleanup doesn't happen immediately after the PR, it rarely happens at all
+- "Cleaning up later" is how codebases degenerate
+- Technical debt accumulates from these small deferred improvements
+
+**Best practice:**
+- **Insist on cleanup now** before the code is merged
+- Unless it's a genuine emergency, the PR should be clean before merging
+- If surrounding problems can't be addressed: file a bug, assign to developer, add TODO comment
+
+## Responding to General Strictness Complaints
+
+If you transition from lax to strict reviews, some developers will complain loudly.
+
+**This usually fades when:**
+- Review responses get faster (speed improves perception)
+- Developers see the quality of code improving
+- Time passes and they adjust
+
+**Timeline:** May take months for complaints to fade.
+
+**The outcome:** Developers often become your strongest supporters once they see the value. Even the loudest critics sometimes become advocates after they experience benefits.
+
+## Managing Disagreements
+
+**Your goal:** Help developers write better code while maintaining a respectful relationship.
+
+**Steps to resolve disagreement:**
+
+1. **Understand their perspective** - Ask questions, listen carefully
+2. **Explain your reasoning** - Don't assume they understand why you're asking
+3. **Find common ground** - Focus on code health, not personal preference
+4. **Offer options** - Give alternatives when possible
+5. **Know when to escalate** - If still unresolved, escalate to team lead or architect
+
+**If unresolved:** See your Code Review standards document for resolution principles and authority guidelines.
+
+## Common Pushback Scenarios
+
+**Scenario: "This is too much work to refactor"**
+> Response: "I agree it's work, but the current approach has X problem. Let's break it into small steps: first do Y, then Z. We can do this in 30 minutes."
+
+**Scenario: "I'll fix this in the next PR"**
+> Response: "I understand the pressure to ship quickly. Cleanups rarely happen after the PR lands. Let's fix it now—it should take 20 minutes. I can help if needed."
+
+**Scenario: "This is just your opinion"**
+> Response: "This relates to code health because X. The style guide recommends Y for this reason. Let me know if you see a concern with that approach."
+
+**Scenario: "No one else does it this way"**
+> Response: "That's fair, but we're moving toward this approach for consistency and maintainability. Starting now with new code helps us improve gradually."
+
+## The Attitude That Works
+
+**What successful reviewers do:**
+- Stay calm and professional
+- Explain reasoning clearly
+- Acknowledge valid points
+- Admit when they're wrong
+- Focus on code health, not control
+- Care about developer growth
+- Follow through with kindness
+
+**This approach:**
+- Reduces defensiveness
+- Builds trust over time
+- Creates better code
+- Develops stronger engineers
+- Makes reviews faster
+
+## When to Compromise
+
+You don't have to be right about everything. Good compromises:
+
+- Developer's solution is slightly different but equally good
+- Issue is style preference, not health problem
+- Trade-off is worth the improved relationship
+- Developer has context you're missing
+
+**When not to compromise:**
+- Core code health is at risk
+- Security is affected
+- Architecture is violated
+- Performance will degrade
+
+---
+
+## Documentation
+
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Architecture](./architecture) - System design
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions

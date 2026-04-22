@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Architecture
+---
+
+# Architecture
+
+System design patterns, principles, and scaling strategies for reliable systems.
+
+## Principles
+
+- **Keep it simple** - Choose solutions you can understand and explain
+- **Design for 100 users** - Optimize for your actual constraints, not imaginary scale
+- **Measure bottlenecks** - Don't optimize what doesn't matter
+- **Plan for failure** - Every component will fail at some point
+
+## Tradeoffs
+
+Every architectural decision is a tradeoff. Document both sides:
+
+- **Monolith vs Microservices** - Cohesion vs autonomy
+- **Relational vs NoSQL** - ACID guarantees vs horizontal scale
+- **Sync vs Async** - Consistency vs resilience
+- **Caching vs Fresh Data** - Performance vs correctness
+
+## System Design Patterns
+
+### Request-Response
+- Simple, synchronous
+- Good for: User-facing APIs, immediate feedback
+- Bad for: Long-running operations, offline-first systems
+
+### Pub/Sub (Event-Driven)
+- Decoupled producers and consumers
+- Good for: Notifications, side effects, scaling reads
+- Bad for: Guaranteed delivery, strict ordering
+
+### Batch Processing
+- Process data in bulk at intervals
+- Good for: Analytics, background work, non-urgent tasks
+- Bad for: Real-time requirements, streaming data
+
+### CQRS (Command Query Responsibility Segregation)
+- Separate read and write paths
+- Good for: Complex queries, high-volume reads
+- Bad for: Simple CRUD apps, eventual consistency issues
+
+## Scaling Strategy
+
+Follow this progression **in order**. Don't skip steps.
+
+### 1. Make It Work for 100 Users
+- Single database
+- Single application server
+- In-memory caching (Redis)
+- No horizontal scaling
+
+### 2. Make It Stable
+- Add monitoring and alerting
+- Set up log aggregation
+- Create runbooks for common failures
+- Measure response times and error rates
+
+### 3. Measure Bottlenecks
+- Profile the application
+- Identify slow queries
+- Find hot codepaths
+- Measure I/O vs CPU bound work
+
+### 4. Scale Only What Breaks
+- Horizontal scale the bottleneck only
+- Add read replicas if reads are slow
+- Add service workers if background jobs are slow
+- Shard the database if storage/write throughput is the limit
+
+### 5. Repeat
+- New bottleneck will emerge
+- Measure, identify, scale that one
+
+## Common Mistakes
+
+- **Building for 1 million users on day one** - You don't know your constraints yet
+- **Microservices from the start** - Premature distribution
+- **Caching before profiling** - Cache the wrong thing, buy nothing
+- **Horizontal scaling without load testing** - Doesn't fix bad code
+- **Ignoring the database** - Usually the bottleneck anyway
+
+---
+
+## Documentation
+
+- [Code Review](./code-review) - What to look for in reviews
+- [Code Review Speed](./code-review-speed) - Why fast reviews matter
+- [Code Review Comments](./code-review-comments) - How to write helpful comments
+- [Handling Pushback](./code-review-pushback) - Responding to disagreement
+- [Code Style](./code-style) - Formatting and linting standards
+- [DevOps](./devops) - Infrastructure and deployment
+- [SRE](./sre) - Reliability and monitoring
+- [Security](./security) - Encryption and access control
+- [Standards](./standards) - Git, naming, and code reviews
+- [Terminology](./terminology) - Common definitions
